@@ -1,11 +1,14 @@
 
 //const API_KEY = "f9awZEgOl40uWVlNWMMwkS7TK3YcB0rtghWcanMU";
 
-
+let whetherFirstBatch = true
 //let APODdata = renderAPODPictures()
 let APODdata = [];
-
-(async function createAndPopulateImages(){
+let initializeWebsite
+const loadingDiv = document.getElementsByClassName("lds-spinner")[0];
+(initializeWebsite = async function(){
+    addLoading()
+    removeMoreButton()
     await renderAPODPictures()
     .then(response => {
         console.log(response)
@@ -13,14 +16,53 @@ let APODdata = [];
             printServerError()
             return
         }
+        if(whetherFirstBatch) whetherFirstBatch = false
         removeLoading()
-        for(let i = 0;i < response.length;++i){
-            APODdata.push(response[i])
-            console.log(response[i]);
-            createWindow(response[i],i)
-        }
+            //addScrollListenerForWindow()
+        addMoreButton()
+        populateWebsiteAndArray(response)
     })
 })();
+function addScrollListenerForWindow(){
+    window.addEventListener("scroll",function(){
+        if(window.scrollTop + window.innerHeight > document.innerHeight -100){
+            initializeWebsite()
+        }
+    })
+}
+function addMoreButton(){
+    const divId = "add-more-button"
+    //document.body.removeChild(document.getElementById(divId))
+    const newDiv = document.createElement("div")
+    newDiv.id = divId 
+    newDiv.classList.add("button-div")
+    const newButton = document.createElement("button")
+    newButton.addEventListener("click", (req, res)=>{
+        initializeWebsite()
+    })
+    newButton.classList.add("more-button")
+    newButton.textContent = "+"
+    newDiv.appendChild(newButton)
+    document.body.appendChild(newDiv)
+}
+function removeMoreButton(){
+    try{
+        document.getElementById("add-more-button").remove()
+    }catch(e){
+
+    }
+    
+}
+function populateWebsiteAndArray(response){
+    for(let i = 0;i < response.length;++i){
+        APODdata.push(response[i])
+        console.log(response[i]);
+        createWindow(response[i],i)
+    }
+}
+function addLoading(){
+    document.body.appendChild(loadingDiv)
+}
 function removeLoading(){
     document.getElementsByClassName("lds-spinner")[0].remove()
 }
@@ -74,7 +116,6 @@ async function createWindow(picDiv, whichNumber){
             //postObjectAfterClick(newForm,APODdata[whichNumber])
         })
         document.getElementById("APODwrapper").appendChild(newDiv)
-    
 }
 async function postObjectAfterClick(form,APODObject){
 

@@ -54,9 +54,12 @@ span{
         /* transition: width 2s; */
     
 }
-.image-div .image-outline:hover{
-    width: 33vw
+@media (min-aspect-ratio: 9/21){
+    .image-div .image-outline:hover{
+        width: 33vw
+    }
 }
+
 /* @media (min-aspect-ratio: 9/12){
     .image-outline:hover{
         animation-timing-function: ease; 
@@ -66,7 +69,24 @@ span{
         height: auto;
     } 
 } */
-
+.button-div{
+    padding-top: 3vw;
+    padding-bottom: 3vw;
+    margin-left: 50%;
+    margin-right: 50%;
+}
+.more-button{
+    color: grey;
+    padding: 0px;
+    border-color: grey;
+    border-width: 0px;
+    font-size: 8vw;
+    border-radius: 50%;
+    height: 10vw;
+    width: 10vw;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
 .enlarge-image{
     animation: enlarge-image 1s timing-function delay iteration-count direction fill-mode;
 }
@@ -103,7 +123,7 @@ left: -2.5vw;}
         column-gap: 2vh;
     }
 }
-/*  */
+/* loading spinner */
 .lds-spinner {
 
     margin-left: 50%;
