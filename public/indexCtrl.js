@@ -1,0 +1,126 @@
+
+//const API_KEY = "f9awZEgOl40uWVlNWMMwkS7TK3YcB0rtghWcanMU";
+
+
+//let APODdata = renderAPODPictures()
+let APODdata = [];
+
+(async function createAndPopulateImages(){
+    await renderAPODPictures()
+    .then(response => {
+        console.log(response)
+        if(response.name && response.name == "Error"){
+            printServerError()
+            return
+        }
+        removeLoading()
+        for(let i = 0;i < response.length;++i){
+            APODdata.push(response[i])
+            console.log(response[i]);
+            createWindow(response[i],i)
+        }
+    })
+})();
+function removeLoading(){
+    document.getElementsByClassName("lds-spinner")[0].remove()
+}
+function printServerError(){
+    const errorDiv = document.createElement("div")
+    const errorParagraph = document.createElement("p")
+    const errorImg = document.createElement("img")
+    errorImg.src = "/public/images/error.png"
+    errorParagraph.textContent = "There has been an error on the server side. Please visit us again soon."
+    errorParagraph.classList.add("error-text")
+    errorDiv.classList.add("error-div")
+    errorDiv.appendChild(errorImg)
+    errorDiv.appendChild(errorParagraph)
+    document.body.appendChild(errorDiv)
+}
+async function createWindow(picDiv, whichNumber){
+        const newDiv = document.createElement("div")
+        newDiv.classList.add("image-div")
+        newDiv.id = "APOD" + whichNumber.toString()
+        const newForm = document.createElement("form")
+        newForm.method = "POST"
+        newForm.body = picDiv
+        newForm.action = "/APOD/" + picDiv.date.toString()
+        const newImg = document.createElement("input")
+        newImg.type = "image"
+        newImg.src = picDiv.url
+        newImg.alt = picDiv.title
+        newImg.classList.add("image-outline")
+
+        const newTitle = document.createElement("p")
+        newTitle.textContent = picDiv.title
+        const newDate = document.createElement("span")
+        newDate.textContent = picDiv.date
+
+        newForm.appendChild(newImg)
+        newForm.appendChild(newTitle)
+        newForm.appendChild(newDate) 
+        newDiv.appendChild(newForm)
+        newForm.addEventListener("submit", (e)=>{
+            console.log(APODdata);
+            e.preventDefault()
+            const data = new FormData()
+            //JSON.stringify(APODdata[whichNumber])
+            for(const key in APODdata[whichNumber]){
+                data.append(key, APODdata[whichNumber][key])
+            }
+            let request = new XMLHttpRequest();
+            request.open("POST", "/APOD/" + APODdata[whichNumber].date);
+            //request.send(data);
+            e.open(data)
+            //postObjectAfterClick(newForm,APODdata[whichNumber])
+        })
+        document.getElementById("APODwrapper").appendChild(newDiv)
+    
+}
+async function postObjectAfterClick(form,APODObject){
+
+    let oData = new FormData(form)
+
+    oData.append
+
+
+    post
+    console.log("postObjectAfterClick " + JSON.stringify(APODObject));
+    fetch("/APOD/" + APODObject.date,{
+        method:"POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+        redirect: 'follow',
+        body: JSON.stringify(APODObject)
+    })    .then((response) => {
+        // HTTP 301 response
+        // HOW CAN I FOLLOW THE HTTP REDIRECT RESPONSE?
+        console.log(response);
+        if (response.redirected) {
+            window.location.href = response.url;
+        }
+    }).catch(function(err) {
+            console.info(err + " url: " + url);
+        });
+}
+async function renderAPODPictures(){
+    const count = 30
+    let response
+    try{
+        response = await fetch("/APOD", {
+            method: "GET",
+            mode: "cors"
+        })
+        .then((response) => {
+
+            console.log("indexCtrl fetching");
+            //console.log(response.json())
+            //console.log(JSON.parse(response.body))
+            console.log("End of indexCtrl fetching");
+            return response.json()})
+     }catch(err){
+          console.log(err)
+     }
+    return response
+}
