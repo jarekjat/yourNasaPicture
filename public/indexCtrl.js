@@ -101,20 +101,20 @@ async function createWindow(picDiv, whichNumber){
         newForm.appendChild(newTitle)
         newForm.appendChild(newDate) 
         newDiv.appendChild(newForm)
-        newForm.addEventListener("submit", (e)=>{
-            console.log(APODdata);
-            e.preventDefault()
-            const data = new FormData()
-            //JSON.stringify(APODdata[whichNumber])
-            for(const key in APODdata[whichNumber]){
-                data.append(key, APODdata[whichNumber][key])
-            }
-            let request = new XMLHttpRequest();
-            request.open("POST", "/APOD/" + APODdata[whichNumber].date);
-            //request.send(data);
-            e.open(data)
-            //postObjectAfterClick(newForm,APODdata[whichNumber])
-        })
+        // newForm.addEventListener("submit", (e)=>{
+        //     console.log(APODdata);
+        //     e.preventDefault()
+        //     const data = new FormData()
+        //     //JSON.stringify(APODdata[whichNumber])
+        //     for(const key in APODdata[whichNumber]){
+        //         data.append(key, APODdata[whichNumber][key])
+        //     }
+        //     let request = new XMLHttpRequest();
+        //     request.open("POST", "/APOD/" + APODdata[whichNumber].date);
+        //     //request.send(data);
+        //     e.open(data)
+        //     //postObjectAfterClick(newForm,APODdata[whichNumber])
+        // })
         document.getElementById("APODwrapper").appendChild(newDiv)
 }
 // async function postObjectAfterClick(form,APODObject){

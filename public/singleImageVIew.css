@@ -29,6 +29,9 @@ p{
       .card{
           width: 60vw;
       }
+      img{
+          width: 60vw;
+      }
   }
   footer{
       margin-top: 2vw;
