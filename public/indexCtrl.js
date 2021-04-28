@@ -83,7 +83,7 @@ async function createWindow(picDiv, whichNumber){
         newDiv.classList.add("image-div")
         newDiv.id = "APOD" + whichNumber.toString()
         const newForm = document.createElement("form")
-        newForm.method = "POST"
+        //newForm.method = "POST"
         newForm.body = picDiv
         newForm.action = "/APOD/" + picDiv.date.toString()
         const newImg = document.createElement("input")
@@ -117,34 +117,34 @@ async function createWindow(picDiv, whichNumber){
         })
         document.getElementById("APODwrapper").appendChild(newDiv)
 }
-async function postObjectAfterClick(form,APODObject){
+// async function postObjectAfterClick(form,APODObject){
 
-    let oData = new FormData(form)
+//     let oData = new FormData(form)
 
-    oData.append
+//     oData.append
 
 
-    post
-    console.log("postObjectAfterClick " + JSON.stringify(APODObject));
-    fetch("/APOD/" + APODObject.date,{
-        method:"POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-        redirect: 'follow',
-        body: JSON.stringify(APODObject)
-    })    .then((response) => {
-        // HTTP 301 response
-        // HOW CAN I FOLLOW THE HTTP REDIRECT RESPONSE?
-        console.log(response);
-        if (response.redirected) {
-            window.location.href = response.url;
-        }
-    }).catch(function(err) {
-            console.info(err + " url: " + url);
-        });
-}
+//     post
+//     console.log("postObjectAfterClick " + JSON.stringify(APODObject));
+//     fetch("/APOD/" + APODObject.date,{
+//         method:"POST",
+//         headers: {
+//             'Accept': 'application/json',
+//             'Content-Type': 'application/json'
+//           },
+//         redirect: 'follow',
+//         body: JSON.stringify(APODObject)
+//     })    .then((response) => {
+//         // HTTP 301 response
+//         // HOW CAN I FOLLOW THE HTTP REDIRECT RESPONSE?
+//         console.log(response);
+//         if (response.redirected) {
+//             window.location.href = response.url;
+//         }
+//     }).catch(function(err) {
+//             console.info(err + " url: " + url);
+//         });
+// }
 async function renderAPODPictures(){
     const count = 30
     let response
