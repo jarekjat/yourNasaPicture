@@ -1,8 +1,5 @@
-
-//const API_KEY = "f9awZEgOl40uWVlNWMMwkS7TK3YcB0rtghWcanMU";
-
+import defaultExport from 'image-card.js';
 let whetherFirstBatch = true
-//let APODdata = renderAPODPictures()
 let APODdata = [];
 let initializeWebsite
 const loadingDiv = document.getElementsByClassName("lds-spinner")[0];
@@ -18,7 +15,6 @@ const loadingDiv = document.getElementsByClassName("lds-spinner")[0];
         }
         if(whetherFirstBatch) whetherFirstBatch = false
         removeLoading()
-            //addScrollListenerForWindow()
         addMoreButton()
         populateWebsiteAndArray(response)
     })
@@ -32,7 +28,6 @@ function addScrollListenerForWindow(){
 }
 function addMoreButton(){
     const divId = "add-more-button"
-    //document.body.removeChild(document.getElementById(divId))
     const newDiv = document.createElement("div")
     newDiv.id = divId 
     newDiv.classList.add("button-div")
@@ -46,12 +41,7 @@ function addMoreButton(){
     document.body.appendChild(newDiv)
 }
 function removeMoreButton(){
-    try{
-        document.getElementById("add-more-button").remove()
-    }catch(e){
-
-    }
-    
+    if(document.getElementById("add-more-button")) document.getElementById("add-more-button").remove()
 }
 function populateWebsiteAndArray(response){
     for(let i = 0;i < response.length;++i){

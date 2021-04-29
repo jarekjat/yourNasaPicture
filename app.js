@@ -14,7 +14,7 @@ app.set('view engine','ejs')
 //app.use(expressLayouts);
 app.route("/").get((req, res)=>{
     //getEarthPictures()
-    res.sendFile(__dirname + "/public/index.html")
+    res.render("index.ejs")
 })
 app.route("/APOD/:articleDate").get(async (req,res)=>{
     let response = await getSpecificAPOD(req.params.articleDate)
@@ -22,12 +22,12 @@ app.route("/APOD/:articleDate").get(async (req,res)=>{
         res.render("singleImageView",{
             title: response.title,
             date:response.date,
+            copyright: response.copyright,
             explanation: response.explanation,
             hdurl: response.hdurl
 
         })
     })
-
 }).post((req,res)=>{
     res.set({
         "type":"text/html",
@@ -37,8 +37,15 @@ app.route("/APOD/:articleDate").get(async (req,res)=>{
     res.render("singleImageView.ejs",{title: req.body.title, 
                                 hdurl: req.body.hdurl,
                                 date: req.body.date,
+                                copyright: req.body.copyright,
                                 explanation : req.body.explanation}) 
 })
+
+app.route("/epic").get((req,res)=>{
+
+    res.render("epic")
+})
+
 app.get("/APOD", async (req, res)=>{
     res.set({
         "Content-Type": "application/json",
@@ -46,7 +53,7 @@ app.get("/APOD", async (req, res)=>{
     })
     let response = "kupa tu jest"
     console.log(response);
-    response = await getEarthPictures().then((response) => {
+    response = await getAPODPictures().then((response) => {
         console.log("response w app.get: " + response)
         console.log(typeof response)
         res.send(response)})
@@ -66,7 +73,7 @@ async function getSpecificAPOD(date){
     return response.data
 }
 
-async function getEarthPictures(){
+async function getAPODPictures(){
     const count = 30
     console.log("This is server here! https://api.nasa.gov/planetary/apod?api_key=" + API_KEY + "&count=" + count.toString());
     let response
