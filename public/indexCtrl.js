@@ -1,8 +1,4 @@
-
-//const API_KEY = "f9awZEgOl40uWVlNWMMwkS7TK3YcB0rtghWcanMU";
-
-let whetherFirstBatch = true
-//let APODdata = renderAPODPictures()
+import ImageCard from './image-card.js';
 let APODdata = [];
 let initializeWebsite
 const loadingDiv = document.getElementsByClassName("lds-spinner")[0];
@@ -16,23 +12,13 @@ const loadingDiv = document.getElementsByClassName("lds-spinner")[0];
             printServerError()
             return
         }
-        if(whetherFirstBatch) whetherFirstBatch = false
         removeLoading()
-            //addScrollListenerForWindow()
         addMoreButton()
         populateWebsiteAndArray(response)
     })
 })();
-function addScrollListenerForWindow(){
-    window.addEventListener("scroll",function(){
-        if(window.scrollTop + window.innerHeight > document.innerHeight -100){
-            initializeWebsite()
-        }
-    })
-}
 function addMoreButton(){
     const divId = "add-more-button"
-    //document.body.removeChild(document.getElementById(divId))
     const newDiv = document.createElement("div")
     newDiv.id = divId 
     newDiv.classList.add("button-div")
@@ -46,12 +32,7 @@ function addMoreButton(){
     document.body.appendChild(newDiv)
 }
 function removeMoreButton(){
-    try{
-        document.getElementById("add-more-button").remove()
-    }catch(e){
-
-    }
-    
+    if(document.getElementById("add-more-button")) document.getElementById("add-more-button").remove()
 }
 function populateWebsiteAndArray(response){
     for(let i = 0;i < response.length;++i){
@@ -79,89 +60,23 @@ function printServerError(){
     document.body.appendChild(errorDiv)
 }
 async function createWindow(picDiv, whichNumber){
-        const newDiv = document.createElement("div")
-        newDiv.classList.add("image-div")
-        newDiv.id = "APOD" + whichNumber.toString()
-        const newForm = document.createElement("form")
-        //newForm.method = "POST"
-        newForm.body = picDiv
-        newForm.action = "/APOD/" + picDiv.date.toString()
-        const newImg = document.createElement("input")
-        newImg.type = "image"
-        newImg.src = picDiv.url
-        newImg.alt = picDiv.title
-        newImg.classList.add("image-outline")
-
-        const newTitle = document.createElement("p")
-        newTitle.textContent = picDiv.title
-        const newDate = document.createElement("span")
-        newDate.textContent = picDiv.date
-
-        newForm.appendChild(newImg)
-        newForm.appendChild(newTitle)
-        newForm.appendChild(newDate) 
-        newDiv.appendChild(newForm)
-        // newForm.addEventListener("submit", (e)=>{
-        //     console.log(APODdata);
-        //     e.preventDefault()
-        //     const data = new FormData()
-        //     //JSON.stringify(APODdata[whichNumber])
-        //     for(const key in APODdata[whichNumber]){
-        //         data.append(key, APODdata[whichNumber][key])
-        //     }
-        //     let request = new XMLHttpRequest();
-        //     request.open("POST", "/APOD/" + APODdata[whichNumber].date);
-        //     //request.send(data);
-        //     e.open(data)
-        //     //postObjectAfterClick(newForm,APODdata[whichNumber])
-        // })
-        document.getElementById("APODwrapper").appendChild(newDiv)
+        const newImageContainer = new ImageCard(picDiv.url,picDiv.title,picDiv.date)
+        document.getElementById("APODwrapper").appendChild(newImageContainer)
 }
-// async function postObjectAfterClick(form,APODObject){
 
-//     let oData = new FormData(form)
-
-//     oData.append
-
-
-//     post
-//     console.log("postObjectAfterClick " + JSON.stringify(APODObject));
-//     fetch("/APOD/" + APODObject.date,{
-//         method:"POST",
-//         headers: {
-//             'Accept': 'application/json',
-//             'Content-Type': 'application/json'
-//           },
-//         redirect: 'follow',
-//         body: JSON.stringify(APODObject)
-//     })    .then((response) => {
-//         // HTTP 301 response
-//         // HOW CAN I FOLLOW THE HTTP REDIRECT RESPONSE?
-//         console.log(response);
-//         if (response.redirected) {
-//             window.location.href = response.url;
-//         }
-//     }).catch(function(err) {
-//             console.info(err + " url: " + url);
-//         });
-// }
 async function renderAPODPictures(){
     const count = 30
     let response
-    try{
         response = await fetch("/APOD", {
             method: "GET",
             mode: "cors"
         })
         .then((response) => {
-
-            console.log("indexCtrl fetching");
-            //console.log(response.json())
-            //console.log(JSON.parse(response.body))
             console.log("End of indexCtrl fetching");
             return response.json()})
-     }catch(err){
-          console.log(err)
-     }
+        .catch(err=>{
+            console.error(err);
+        })
+
     return response
 }

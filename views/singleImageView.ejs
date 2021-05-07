@@ -1,20 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/public/singleImageVIew.css" rel="stylesheet">
-    <title><%= title %></title>
-</head>
-<body>
-    <div class="card">
-        <img src="<%= hdurl %>" alt="<%= title %>">
-        <h2><%= title %></h2>
-        <p><%= date %></p>
-        <article><%= explanation %></article>
+<%- include('header') -%>
+    <div class="single-image-card">
+        <img class="single-image-view" src="<%= hdurl %>" alt="<%= title %>">
+        <h2 ><%= title %></h2>
+        <p class="single-image-p"><%= date %></p>
+        <p class="single-image-p"><%= copyright %></p>
+        <article class="single-image-article"><%= explanation %></article>
     </div>
-    <footer>Jarosław Jatczak 2021</footer>
-    
-</body>
-</html>
+    <footer class="single-image-footer">Jarosław Jatczak 2021</footer>
+<%- include('footer') -%>
