@@ -1,23 +1,23 @@
 const express = require("express")
+require('dotenv').config()
 const axios = require("axios")
 const app = express()
+
 const ejs = require("ejs")
-//const expressLayouts = require('express-ejs-layouts');
 const bodyParser = require("body-parser")
-const API_KEY = "f9awZEgOl40uWVlNWMMwkS7TK3YcB0rtghWcanMU"
+const API_KEY = process.env.API_KEY
 app.use("/public", express.static("public"))
 app.use("/views", express.static("views"))
 app.set('views', __dirname + '/views');
 app.use(express({urlencoded:true}))
 app.use(express.json())
 app.set('view engine','ejs')
-//app.use(expressLayouts);
 app.route("/").get((req, res)=>{
     //getEarthPictures()
     res.render("index.ejs")
 })
 app.route("/APOD/:articleDate").get(async (req,res)=>{
-    let response = await getSpecificAPOD(req.params.articleDate)
+    getSpecificAPOD(req.params.articleDate)
     .then((response)=>{
         res.render("singleImageView",{
             title: response.title,
@@ -51,7 +51,7 @@ app.get("/APOD", async (req, res)=>{
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
     })
-    let response = "kupa tu jest"
+    let response 
     console.log(response);
     response = await getAPODPictures().then((response) => {
         console.log("response w app.get: " + response)
@@ -61,34 +61,28 @@ app.get("/APOD", async (req, res)=>{
     
 })
 async function getSpecificAPOD(date){
-    let response
-    try{
-        response = await axios.get("https://api.nasa.gov/planetary/apod?api_key=" + API_KEY + "&date=" + date)
+       const  response = await axios.get("https://api.nasa.gov/planetary/apod?api_key=" + API_KEY + "&date=" + date)
         .then((response)=>{
             return response
-        })
-    }catch(error){
-        return error
-    }
+        }).catch(()=> {return {data:{name: "Error", code: "503"}}})
+
     return response.data
 }
 
 async function getAPODPictures(){
     const count = 30
     console.log("This is server here! https://api.nasa.gov/planetary/apod?api_key=" + API_KEY + "&count=" + count.toString());
-    let response
-    try {
-        response = await axios.get("https://api.nasa.gov/planetary/apod?api_key=" + API_KEY + "&count=" + count.toString())
+
+       const response = await axios.get("https://api.nasa.gov/planetary/apod?api_key=" + API_KEY + "&count=" + count.toString())
         .then((response)=>{
-            //response.json()
             console.log(response.data);
             console.log("End of server logging")
             return response
         })
-    } catch (error) {
-        console.log(error);
-        return error;
-    }
+        .catch((reason)=> {
+            console.log(reason)
+            return {data:{name: "Error", code: "503"}}})
+        
     return response.data
 }
 

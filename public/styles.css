@@ -48,8 +48,7 @@ span{
     }
 }
 .image-div{
-    width: 30vw;
-
+      width: 30vw;
         margin-top: 0vw;
         width: auto;
         padding-bottom: 1vw;
@@ -68,8 +67,7 @@ span{
 .button-div{
     margin-top: 3vw;
     margin-bottom: 3vw;
-    margin-left: 50%;
-    margin-right: 50%;
+    text-align: center;
 }
 .more-button{
     color: grey;
@@ -218,8 +216,7 @@ span{
       }
   }
   .single-image-footer{
-      margin-left: 50%;
-      margin-right: 50%;
+      text-align: center;
       margin-bottom: 2vw;
       margin-top: 2vw;
       color: grey;

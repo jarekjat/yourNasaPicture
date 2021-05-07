@@ -1,5 +1,4 @@
 import ImageCard from './image-card.js';
-let whetherFirstBatch = true
 let APODdata = [];
 let initializeWebsite
 const loadingDiv = document.getElementsByClassName("lds-spinner")[0];
@@ -13,7 +12,6 @@ const loadingDiv = document.getElementsByClassName("lds-spinner")[0];
             printServerError()
             return
         }
-        if(whetherFirstBatch) whetherFirstBatch = false
         removeLoading()
         addMoreButton()
         populateWebsiteAndArray(response)
@@ -69,7 +67,6 @@ async function createWindow(picDiv, whichNumber){
 async function renderAPODPictures(){
     const count = 30
     let response
-    try{
         response = await fetch("/APOD", {
             method: "GET",
             mode: "cors"
@@ -77,8 +74,9 @@ async function renderAPODPictures(){
         .then((response) => {
             console.log("End of indexCtrl fetching");
             return response.json()})
-     }catch(err){
-          console.log(err)
-     }
+        .catch(err=>{
+            console.error(err);
+        })
+
     return response
 }
