@@ -1,0 +1,42 @@
+<%- include ('header') -%>
+<div class="single-image-card-bigger">
+    <img id="satelliteImage" class="single-image-view-bigger" src="" alt="satellite">
+    <div class="space-div"></div>
+        <input id="dateInput" type="datetime-local">
+        <div class="space-div"></div>
+        <!-- <input type="range"> -->
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Latitude</span>
+            </div>
+            <input id="latitudeInput" type="number" class="form-control" aria-label="Latitude">
+            <div class="input-group-append">
+              <span class="input-group-text">&#176;</span>
+              <input type="radio" name="N/S" value="N" checked>
+                <label for="N">N</label>
+                <input type="radio" name="N/S" value="S">
+                <label for="S">S</label>
+            </div>
+            
+          </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Longitude</span>
+            </div>
+            <input id="longitudeInput" type="number" class="form-control" aria-label="Longitude">
+            <div class="input-group-append">
+              <span class="input-group-text">&#176;</span>
+              <input class="input-group-text" type="radio" name="E/W" value="E" checked>
+                <label for="E">E</label>
+                <input type="radio" name="E/W" value="W">
+                <label for="W">W</label>
+            </div>
+           
+          </div>
+        <!-- <input type="range"> -->
+        <button id="getSatImageButton" type="submit" class="btn btn-secondary">Get your satellite image</button>
+    
+</div>
+<footer class="single-image-footer">Jarosław Jatczak 2021</footer>
+    <script src="../public/satelliteImageCtrl.js" type="text/javascript"></script>
+<%- include ('footer') -%>

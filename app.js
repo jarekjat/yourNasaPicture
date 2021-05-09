@@ -40,7 +40,13 @@ app.route("/APOD/:articleDate").get(async (req,res)=>{
                                 copyright: req.body.copyright,
                                 explanation : req.body.explanation}) 
 })
-
+app.route("/satellite").get((req,res)=>{
+    res.render("satelliteImage")
+})
+app.route("/satellite/:date/:longitude/:latitude").get(async (req,res)=>{
+    const response = await getSattelliteImage(req.params.date, req.params.longitude, req.params.latitude)
+    res.send(response)
+})
 app.route("/epic").get((req,res)=>{
 
     res.render("epic")
@@ -51,9 +57,7 @@ app.get("/APOD", async (req, res)=>{
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
     })
-    let response 
-    console.log(response);
-    response = await getAPODPictures().then((response) => {
+    const response = await getAPODPictures().then((response) => {
         console.log("response w app.get: " + response)
         console.log(typeof response)
         res.send(response)})
@@ -85,7 +89,15 @@ async function getAPODPictures(){
         
     return response.data
 }
-
+async function getSattelliteImage(date, longitude, latitude){
+    const dim = 0.4
+    console.log("https://api.nasa.gov/planetary/earth/assets?api_key=" + API_KEY + "&lon=" + longitude + "&lat=" + latitude + "&date=" + date + "&dim=" + dim)
+   const response = await axios.get("https://api.nasa.gov/planetary/earth/assets?api_key=" + API_KEY + "&lon=" + longitude + "&lat=" + latitude + "&date=" + date + "&dim=" + dim)
+   .then(response => response)
+   .catch((reason) =>  {//console.log(reason)
+     return {data:{name: "Error", code: "503"}}})
+   return response.data
+}
 app.listen(process.env.PORT || 3000, function(){
     console.log("Listening on port 3000");
 })

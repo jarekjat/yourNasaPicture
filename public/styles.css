@@ -17,6 +17,9 @@ p{
     font-size: 5vw;
     padding-left: 1vw;
 }
+.space-div{
+  height: 2vw;
+}
 span{
     color: grey;
     font-size: 4vw;
@@ -183,7 +186,7 @@ span{
   }
 
 /* this is for singleImageView */
-  .single-image-view{
+  .single-image-view, .single-image-view-bigger{
     width: 96vw;
     height: auto;
 }
@@ -196,7 +199,7 @@ span{
 .single-image-p{
     color: grey;
 }
-.single-image-card {
+.single-image-card, .single-image-card-bigger {
     margin: auto;
     margin-top: 80px;
     text-align: center;
@@ -220,5 +223,13 @@ span{
       margin-bottom: 2vw;
       margin-top: 2vw;
       color: grey;
+  }
+  @media (min-aspect-ratio: 9/12) {
+    .single-image-card-bigger{
+      width: 80vw;
+    }
+    .single-image-view-bigger{
+      width: 80vw;
+  }
   }
   
