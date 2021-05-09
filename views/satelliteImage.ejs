@@ -2,12 +2,16 @@
 <div class="single-image-card-bigger">
     <img id="satelliteImage" class="single-image-view-bigger" src="" alt="satellite">
     <div class="space-div"></div>
-        <input id="dateInput" type="datetime-local">
-        <div class="space-div"></div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">You can change date for picture here:</span>
+      </div>
+          <input id="dateInput" type="datetime-local">
+    </div>
         <!-- <input type="range"> -->
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text">Latitude</span>
+              <span class="input-group-text">Latitude:</span>
             </div>
             <input id="latitudeInput" type="number" class="form-control" aria-label="Latitude">
             <div class="input-group-append">
@@ -21,7 +25,7 @@
           </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <span class="input-group-text">Longitude</span>
+              <span class="input-group-text">Longitude:</span>
             </div>
             <input id="longitudeInput" type="number" class="form-control" aria-label="Longitude">
             <div class="input-group-append">
