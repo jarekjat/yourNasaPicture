@@ -43,7 +43,7 @@ buttonGetSatImage.addEventListener("click",async ()=>{
   }
   async function getSatelliteImage(date, longitude, latitude){
     let response
-    response = await fetch("/satellite/" + date + "/" + longitude + "/" + latitude)
+    response = await fetch("/satellite?date=" + date + "&longitude=" + longitude + "&latitude=" + latitude)
     .then(response =>{
       console.log(response)
       return response.json()
